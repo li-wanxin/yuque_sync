@@ -16,8 +16,9 @@ def handle_post():
         if data and 'upgrade' in data:
             # 执行elog sync命令
             print("recv upgrade command")
-            result = subprocess.run(['elog', 'sync', '-e', '.elog.env'], cwd=conf.data['hexo']['path'], check=True)
-            output = result.stdout
+            result = subprocess.run(['elog', 'sync', '-e', '.elog.env'], cwd=conf.data['hexo']['path'],
+                                     capture_output=True, check=True)
+            output = result.stdout.decode('utf-8')
             print(output)
             if '任务结束' in output:
                 if '同步成功' in output:
