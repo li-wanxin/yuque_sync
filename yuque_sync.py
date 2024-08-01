@@ -16,8 +16,8 @@ def handle_post():
         if data and 'upgrade' in data:
             # 执行elog sync命令
             print("recv upgrade command")
-            result = subprocess.run(['elog', 'sync', '-e', '.elog.env'], cwd=conf.data['hexo']['path'],
-                                     capture_output=True, check=True)
+            result = subprocess.run(['elog sync -e .elog.env'], cwd=conf.data['hexo']['path'], shell=True,
+                                    capture_output=True, check=True)
             output = result.stdout.decode('utf-8')
             print(output)
             if '任务结束' in output:
@@ -37,8 +37,8 @@ def handle_post():
 
 
 def reflashHexo():
-    subprocess.run(['hexo', 'clean'], cwd=conf.data['hexo']['path'], check=True)
-    subprocess.run(['hexo', 'g'], cwd=conf.data['hexo']['path'], check=True)
+    subprocess.run(['hexo clean'], cwd=conf.data['hexo']['path'], shell=True, check=True)
+    subprocess.run(['hexo g'], cwd=conf.data['hexo']['path'], shell=True, check=True)
 
 
 if __name__ == '__main__':
